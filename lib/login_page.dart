@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';  
-import 'package:lodge/screen/home/home.dart';  
+import 'package:lodge/screen/home/home.dart';
+import 'package:lodge/screen/owner_home_page.dart';  
 import 'package:lodge/widget/signup_page.dart';
 
 class LoginPage extends StatefulWidget {  
@@ -13,11 +14,13 @@ class _LoginPageState extends State<LoginPage> {
   String _errorMessage = '';  
   String _role = 'Buyer';
 
+  static final Map<String, String> _users = {};
+
   void _login() {  
     String username = _usernameController.text.trim();  
     String password = _passwordController.text.trim();  
   
-    if (username == 'admin' && password == 'password') {  
+    if (_users.containsKey(username) && _users[username] == password) {  
       // Here you can navigate to different pages based on the selected role
       if (_role == 'Owner') {
         Navigator.pushReplacement(  
@@ -40,7 +43,11 @@ class _LoginPageState extends State<LoginPage> {
   void _navigateToSignup() {    
     Navigator.push(  
       context,  
-      MaterialPageRoute(builder: (context) => SignupPage()),  
+      MaterialPageRoute(builder: (context) => SignupPage(onSignup: (username, password) {
+        setState(() {
+          _users[username] = password;
+        });
+      })),  
     );  
   }  
 
