@@ -74,8 +74,8 @@ class _LoginPageState extends State<LoginPage> {
               children: [  
                 DropdownButtonFormField<String>(
                   value: _role,
-                  dropdownColor: Color.fromARGB(255, 28, 22, 65), // Set the dropdown background color
-                  style: TextStyle(color: Colors.white), // Set the dropdown text color
+                  dropdownColor: Color.fromARGB(255, 28, 22, 65),
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Select Role',
                     labelStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
