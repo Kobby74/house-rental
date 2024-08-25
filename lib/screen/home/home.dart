@@ -7,7 +7,7 @@ import 'package:lodge/screen/home/widget/recommended_house.dart';
 import 'package:lodge/screen/home/widget/search_input.dart';
 import 'package:lodge/screen/home/widget/welcom_text.dart';
 
-class HomePage extends StatelessWidget {
+class  HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
           children: [
            WelcomeText(),
            SearchInput(onSearch: (query) {
-                print('Search query: $query');
+                 print('Search query: $query');
               },),
            Categories(),
           RecommendedHouse(),
