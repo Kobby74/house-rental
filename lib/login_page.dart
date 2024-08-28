@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:lodge/screen/home/home.dart';
-import 'package:lodge/screen/owner_home_page.dart';
 import 'package:lodge/widget/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -28,34 +27,30 @@ class _LoginPageState extends State<LoginPage> {
         'email': email,
         'password': password,
       });
-        setState(() {
-          loading = 'loading...';
-        });
+
+      setState(() {
+        loading = 'loading...';
+      });
+
       var response = await http.post(
         url,
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
         },
         body: body,
       );
 
       if (response.statusCode == 200) {
-        if (_role == 'Owner') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => OwnerHomePage()),
-          );
-        } else {
-          
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage()),
-          );
-        }
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(role: _role),
+          ),
+        );
       } else {
         setState(() {
-        loading = 'retry';
+          loading = 'retry';
           _errorMessage = 'Invalid email or password. Please try again.';
         });
       }
@@ -70,9 +65,10 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SignupPage(onSignup: (email, password) {
-                setState(() {});
-              })),
+        builder: (context) => SignupPage(onSignup: (email, password) {
+          setState(() {});
+        }),
+      ),
     );
   }
 
