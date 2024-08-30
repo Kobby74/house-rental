@@ -40,6 +40,8 @@ class _LoginPageState extends State<LoginPage> {
         },
         body: body,
       );
+      print('Status Code: ${response.statusCode}');
+      print('Response Body:${response.body}');
 
       if (response.statusCode == 200) {
         Navigator.pushReplacement(

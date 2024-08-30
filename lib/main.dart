@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lodge/login_page.dart';
+import 'package:lodge/screen/home/add_apartment.dart';
 import 'package:lodge/screen/home/home.dart';
 
 void main() {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Lodge App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Color.fromARGB(255, 246, 246, 248),
+        scaffoldBackgroundColor: Color.fromARGB(255, 245, 244, 248),
       ),
       home: LoginPage(),
       routes: {
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
           final Map<String, String> args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
           return HomePage(role: args['role']!);
         },
+        '/add_apartment': (context) => AddApartment(),
       },
     );
   }
