@@ -27,7 +27,7 @@ class _AddApartmentState extends State<AddApartment> {
   final List<String> _buildingTypes = ['Compund House','Flat','1 Storey','2 Storey','Other'];
   final List<String> _apartmentTypes = ['single room','single room self contain','Chamber and Hall',
   '2 bedroom','Studio','Micro','duplex'];
-  final List<String> _furnishing = ['Fully Furnished','Semi-furnished','Not Furnished'];
+  final List<String> _furnishing = ['Furnished','Semi-furnished','Not Furnished'];
 
   Future<void> pickImage() async {
     final ImagePicker picker = ImagePicker();

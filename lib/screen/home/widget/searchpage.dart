@@ -15,7 +15,7 @@ class _SearchPageState extends State<SearchPage> {
     setState(() {
       searchResults = houses
           .where((house) => house.name.toLowerCase().contains(query.toLowerCase()) ||
-              house.address.toLowerCase().contains(query.toLowerCase()))
+              house.location.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }
@@ -43,7 +43,7 @@ class _SearchPageState extends State<SearchPage> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(house.address),
+                        Text(house.location),
                         Text(house.description),
                         Text(house.price),
                         Row(

@@ -3,6 +3,7 @@ import 'package:lodge/login_page.dart';
 import 'package:lodge/screen/home/add_apartment.dart';
 import 'package:lodge/screen/home/home.dart';
 
+
 void main() {
   runApp(MyApp());
 }
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Lodge App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Color.fromARGB(255, 245, 244, 248),
+        scaffoldBackgroundColor: Color.fromARGB(255, 28, 22, 65),
       ),
       home: LoginPage(),
       routes: {

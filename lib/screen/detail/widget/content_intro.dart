@@ -16,7 +16,7 @@ class ContentIntro extends StatelessWidget {
         Text(house.name,
         style: Theme.of(context).textTheme.headlineLarge!.copyWith(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black) ),
          SizedBox(height: 10,),
-        Text(house.address,
+        Text(house.location,
         style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 14, color: Colors.black)),
          SizedBox(height: 10,),
         Text(house.description,style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 14, color: Colors.black)),

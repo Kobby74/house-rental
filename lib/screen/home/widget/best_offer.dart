@@ -94,7 +94,7 @@ class _BestOfferState extends State<BestOffer> {
                                   ),
                             ),
                             Text(
-                              el.address,
+                              el.location,
                               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     fontSize: 12,
                                     color: Colors.black,

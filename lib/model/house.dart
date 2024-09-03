@@ -3,115 +3,176 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class House {
   String name;
-  String address;
+  String location;
   String description;
   String price;
   String imageUrl;
+  String region;
+  String town;
+  String country;
+  String gpsAddress;
   String bedroomSvg;
   String kitchenSvg;
   String bathroomSvg;
 
-  House(
-    this.name,
-    this.address,
-    this.imageUrl,
-    this.description,
-    this.price,
-    this.bedroomSvg,
-    this.kitchenSvg,
-    this.bathroomSvg,
-  );
+  House({
+    required this.name,
+    required this.location,
+    required this.imageUrl,
+    required this.description,
+    required this.price,
+    required this.region,
+    required this.town,
+    required this.country,
+    required this.gpsAddress,
+    required this.bedroomSvg,
+    required this.kitchenSvg,
+    required this.bathroomSvg,
+  });
+
+  
+  factory House.fromJson(Map<String, dynamic> json) {
+    return House(
+      name: json['name'] ?? 'Unknown House',
+      location: json['location'] ?? 'Unknown Location',
+      imageUrl: json['imageUrl'] ?? 'assets/images/placeholder.jpg',
+      description: json['description'] ?? 'No description available',
+      price: json['price'] ?? 'No price available',
+      bedroomSvg: 'assets/icons/bedroom.svg',
+      kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
+      bathroomSvg: 'assets/icons/bathroom.svg',
+      region: json['region'] ?? 'Unknown Region',
+      town: json['town'] ?? 'Unknown Town',
+      country: json['country'] ?? 'Unknown Country',
+      gpsAddress: json['gpsAddress'] ?? 'Unknown GPS Address',
+    );
+  }
+
 
   static List<House> generateRecommended() {
     return [
       House(
-        'Chestnut House',
-        'Community 5, Tema',
-        'assets/images/OIP2.jpg',
-        '📍6000 sqft\n🅿Parking loft',
-        '💰GH₵6500/month',
-        'assets/icons/bedroom.svg',
-        'assets/icons/kitchen-room-svgrepo-com.svg',
-        'assets/icons/bathroom.svg',
+        name: 'Chestnut House',
+        location: 'Community 5, Tema',
+        imageUrl: 'assets/images/OIP2.jpg',
+        description: '📍6000 sqft\n🅿Parking loft',
+        price: '💰GH₵6500/month',
+        bedroomSvg: 'assets/icons/bedroom.svg',
+        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
+        bathroomSvg: 'assets/icons/bathroom.svg',
+        region: 'Greater Accra',
+        town: 'Tema',
+        country: 'Ghana',
+        gpsAddress: '5.7323, -0.0333',
       ),
       House(
-        'Willow Way',
-        'TseAddo',
-        'assets/images/R.jpg',
-        '4000 sqft',
-        'GH₵4800/month',
-        'assets/icons/bedroom.svg',
-        'assets/icons/kitchen-room-svgrepo-com.svg',
-        'assets/icons/bathroom.svg',
+        name: 'Willow Way',
+        location: 'TseAddo',
+        imageUrl: 'assets/images/R.jpg',
+        description: '4000 sqft',
+        price: 'GH₵4800/month',
+        bedroomSvg: 'assets/icons/bedroom.svg',
+        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
+        bathroomSvg: 'assets/icons/bathroom.svg',
+        region: 'Greater Accra',
+        town: 'TseAddo',
+        country: 'Ghana',
+        gpsAddress: '5.7323, -0.0333',
       ),
       House(
-        'The Oak Plus',
-        'Tesano',
-        'assets/images/The Oak Plus.jpg',
-        '4400 sqft',
-        'GH₵5200/month',
-        'assets/icons/bedroom.svg',
-        'assets/icons/kitchen-room-svgrepo-com.svg',
-        'assets/icons/bathroom.svg',
+        name: 'The Oak Plus',
+        location: 'Tesano',
+        imageUrl: 'assets/images/The Oak Plus.jpg',
+        description: '4400 sqft',
+        price: 'GH₵5200/month',
+        bedroomSvg: 'assets/icons/bedroom.svg',
+        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
+        bathroomSvg: 'assets/icons/bathroom.svg',
+        region: 'Greater Accra',
+        town: 'Tesano',
+        country: 'Ghana',
+        gpsAddress: '5.7323, -0.0333',
       ),
       House(
-        'Mizu',
-        'TseAddo',
-        'assets/images/R2.jpg',
-        '4700 sqft',
-        'GH₵5600/month',
-        'assets/icons/bedroom.svg',
-        'assets/icons/kitchen-room-svgrepo-com.svg',
-        'assets/icons/bathroom.svg',
+        name: 'Mizu',
+        location: 'TseAddo',
+        imageUrl: 'assets/images/R2.jpg',
+        description: '4700 sqft',
+        price: 'GH₵5600/month',
+        bedroomSvg: 'assets/icons/bedroom.svg',
+        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
+        bathroomSvg: 'assets/icons/bathroom.svg',
+        region: 'Greater Accra',
+        town: 'TseAddo',
+        country: 'Ghana',
+        gpsAddress: '5.7323, -0.0333',
       ),
     ];
   }
 
+  
   static List<House> generateBestOffer() {
     return [
       House(
-        'Milky Way',
-        'East Legon-hills',
-        'assets/images/MR7435.jpg',
-        '6000 sqft',
-        'GH₵4500/month',
-        'assets/icons/bedroom.svg',
-        'assets/icons/kitchen-room-svgrepo-com.svg',
-        'assets/icons/bathroom.svg',
+        name: 'Milky Way',
+        location: 'East Legon-hills',
+        imageUrl: 'assets/images/MR7435.jpg',
+        description: '6000 sqft',
+        price: 'GH₵4500/month',
+        bedroomSvg: 'assets/icons/bedroom.svg',
+        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
+        bathroomSvg: 'assets/icons/bathroom.svg',
+        region: 'Greater Accra',
+        town: 'East Legon-hills',
+        country: 'Ghana',
+        gpsAddress: '5.7323, -0.0333',
       ),
       House(
-        'Cresent Home',
-        'Devtracco-Tema',
-        'assets/images/b114e8fae7fdee6_t_w_800_h_600.jpeg',
-        '6000 sqft',
-        'GH₵4500/month',
-        'assets/icons/bedroom.svg',
-        'assets/icons/kitchen-room-svgrepo-com.svg',
-        'assets/icons/bathroom.svg',
+        name: 'Cresent Home',
+        location: 'Devtracco-Tema',
+        imageUrl: 'assets/images/b114e8fae7fdee6_t_w_800_h_600.jpeg',
+        description: '6000 sqft',
+        price: 'GH₵4500/month',
+        bedroomSvg: 'assets/icons/bedroom.svg',
+        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
+        bathroomSvg: 'assets/icons/bathroom.svg',
+        region: 'Greater Accra',
+        town: 'Devtracco-Tema',
+        country: 'Ghana',
+        gpsAddress: '5.7323, -0.0333',
       ),
       House(
-        'White Galaxy',
-        'Tesano-Accra',
-        'assets/images/4-bed-2a.jpg',
-        '6000 sqft',
-        'GH₵4500/month',
-        'assets/icons/bedroom.svg',
-        'assets/icons/kitchen-room-svgrepo-com.svg',
-        'assets/icons/bathroom.svg',
+        name: 'White Galaxy',
+        location: 'Tesano-Accra',
+        imageUrl: 'assets/images/4-bed-2a.jpg',
+        description: '6000 sqft',
+        price: 'GH₵4500/month',
+        bedroomSvg: 'assets/icons/bedroom.svg',
+        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
+        bathroomSvg: 'assets/icons/bathroom.svg',
+        region: 'Greater Accra',
+        town: 'Tesano-Accra',
+        country: 'Ghana',
+        gpsAddress: '5.7323, -0.0333',
       ),
       House(
-        'Hart lane',
-        'Sakumono-Comm.14',
-        'assets/images/OIP.jpg',
-        '6000 sqft',
-        'GH₵4500/month',
-        'assets/icons/bedroom.svg',
-        'assets/icons/kitchen-room-svgrepo-com.svg',
-        'assets/icons/bathroom.svg',
+        name: 'Hart lane',
+        location: 'Sakumono-Comm.14',
+        imageUrl: 'assets/images/OIP.jpg',
+        description: '6000 sqft',
+        price: 'GH₵4500/month',
+        bedroomSvg: 'assets/icons/bedroom.svg',
+        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
+        bathroomSvg: 'assets/icons/bathroom.svg',
+        region: 'Greater Accra',
+        town: 'Sakumono-Comm.14',
+        country: 'Ghana',
+        gpsAddress: '5.7323, -0.0333',
       ),
     ];
   }
 
+  
   Widget buildBedroomIcon() {
     return Row(
       children: [
@@ -149,7 +210,7 @@ class House {
           height: 30,
         ),
         SizedBox(width: 5),
-        Text('3 bathrooms \n3washrooms'),
+        Text('3 bathrooms \n3 washrooms'),
       ],
     );
   }
