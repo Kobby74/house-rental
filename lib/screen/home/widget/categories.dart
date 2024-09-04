@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Categories extends StatefulWidget {
+  const Categories({super.key});
+
 
   @override
   _CategoriesState createState() => _CategoriesState();
@@ -28,7 +30,7 @@ class _CategoriesState extends State<Categories> {
             });
           },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
               color: currentSelect == index ? Theme.of(context).primaryColor : Colors.transparent,
               borderRadius: BorderRadius.circular(18), 
@@ -44,7 +46,7 @@ class _CategoriesState extends State<Categories> {
             ),
           ),
         ),
-        separatorBuilder: (_, index) => SizedBox(width: 12),
+        separatorBuilder: (_, index) => const SizedBox(width: 12),
         itemCount: categoriesList.length,
       ),
     );

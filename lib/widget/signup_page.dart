@@ -5,7 +5,7 @@ import 'dart:convert';
 class SignupPage extends StatefulWidget {
   final Function(String, String) onSignup;
 
-  SignupPage({required this.onSignup});
+  const SignupPage({super.key, required this.onSignup});
 
   @override
   _SignupPageState createState() => _SignupPageState();
@@ -48,7 +48,7 @@ class _SignupPageState extends State<SignupPage> {
         widget.onSignup(username, password);
         Navigator.pop(context);
       } else {
-        final rest = await response.body;
+        final rest = response.body;
         Map<String, dynamic> responseBody = jsonDecode(response.body);
         setState(() {
         loading = 'retry';
@@ -68,30 +68,30 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up📝'),
-        titleTextStyle: TextStyle(
+        title: const Text('Sign Up📝'),
+        titleTextStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
             color: Color.fromARGB(255, 250, 147, 181)),
-        backgroundColor: Color.fromARGB(255, 28, 22, 65),
+        backgroundColor: const Color.fromARGB(255, 28, 22, 65),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/city4.png'),
             fit: BoxFit.fill,
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 12.0),
+              const SizedBox(height: 12.0),
               TextField(
                 controller: _usernameController,
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
                   labelText: 'name',
                   labelStyle: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
@@ -99,12 +99,12 @@ class _SignupPageState extends State<SignupPage> {
                   hintStyle: TextStyle(color: Colors.white),
                 ),
               ),
-              SizedBox(height: 12.0),
+              const SizedBox(height: 12.0),
               TextField(
                 controller: _passwordController,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Password',
                   labelStyle: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
@@ -112,12 +112,12 @@ class _SignupPageState extends State<SignupPage> {
                   hintStyle: TextStyle(color: Colors.white),
                 ),
               ),
-              SizedBox(height: 12.0),
+              const SizedBox(height: 12.0),
               TextField(
                 controller: _emailController,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
@@ -127,9 +127,9 @@ class _SignupPageState extends State<SignupPage> {
               ),
               Text(
                 _errorMessage,
-                style: TextStyle(color: Colors.red),
+                style: const TextStyle(color: Colors.red),
               ),
-              SizedBox(height: 12.0),
+              const SizedBox(height: 12.0),
               ElevatedButton(
                 onPressed: _signup,
                 child: Text(loading),

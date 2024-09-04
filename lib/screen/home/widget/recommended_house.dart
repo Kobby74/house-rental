@@ -6,7 +6,7 @@ import 'package:lodge/widget/circle_icon_button.dart';
 import 'package:http/http.dart' as http;
 
 class RecommendedHouse extends StatefulWidget {
-  RecommendedHouse({super.key});
+  const RecommendedHouse({super.key});
 
   @override
   _RecommendedHouseState createState() => _RecommendedHouseState();
@@ -14,7 +14,7 @@ class RecommendedHouse extends StatefulWidget {
 
 class _RecommendedHouseState extends State<RecommendedHouse> {
   List<House> recommendedList = [];
-  bool isLoading = true;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -22,42 +22,76 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
     fetchRecommendedHouses();
   }
 
-  Future<void> fetchRecommendedHouses() async {
-    try {
-      var url = Uri.parse('https://rentapp-api.drevap.com/api/property/');
-      var response = await http.get(url);
+Future<void> fetchRecommendedHouses() async {
+  try {
+    var url = Uri.parse('https://rentapp-api.drevap.com/api/property/');
+    var response = await http.get(url);
 
-      if (response.statusCode == 200) {
-        List<dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      print('Response Body: ${response.body}');
+      var data = jsonDecode(response.body);
+
+      // Check if 'data' is a list or a map
+      if (data is List) {
+        // Directly map the list
         setState(() {
           recommendedList = data.map((json) => House.fromJson(json)).toList();
           isLoading = false;
         });
+      } else if (data is Map) {
+        // Check if the map contains a list of properties
+        if (data['properties'] != null && data['properties'] is List) {
+          setState(() {
+            recommendedList = (data['properties'] as List)
+                .map((json) => House.fromJson(json))
+                .toList();
+            isLoading = false;
+          });
+        } else {
+          // Handle case where 'properties' is not found or is not a list
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Unexpected data format.')),
+          );
+          setState(() {
+            isLoading = false;
+          });
+        }
       } else {
+        // Handle unexpected data structure
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to load properties. Status code: ${response.statusCode}')),
+          SnackBar(content: Text('Unexpected data format.')),
         );
         setState(() {
           isLoading = false;
         });
       }
-    } catch (e) {
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $e')),
+        SnackBar(content: Text('Failed to load properties. Status code: ${response.statusCode}')),
       );
       setState(() {
         isLoading = false;
       });
     }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('An error occurred: $e')),
+    );
+    setState(() {
+      isLoading = false;
+    });
   }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(15),
+      padding: const EdgeInsets.all(15),
       height: 340,
       child: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView.separated(
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => GestureDetector(
@@ -69,7 +103,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                 child: Container(
                   height: 300,
                   width: 200,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),
@@ -99,7 +133,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                         right: 0,
                         child: Container(
                           color: Colors.white54,
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -128,7 +162,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                                           color: Colors.black,
                                         ),
                                   ),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                 ],
                               ),
                               CircleIconButton(
@@ -144,7 +178,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                   ),
                 ),
               ),
-              separatorBuilder: (_, index) => SizedBox(width: 20),
+              separatorBuilder: (_, index) => const SizedBox(width: 20),
               itemCount: recommendedList.length,
             ),
     );

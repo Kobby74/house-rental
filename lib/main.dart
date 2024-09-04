@@ -5,25 +5,27 @@ import 'package:lodge/screen/home/home.dart';
 
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Lodge App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Color.fromARGB(255, 28, 22, 65),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
       routes: {
         '/home': (context) {
           final Map<String, String> args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
           return HomePage(role: args['role']!);
         },
-        '/add_apartment': (context) => AddApartment(),
+        '/add_apartment': (context) => const AddApartment(),
       },
     );
   }

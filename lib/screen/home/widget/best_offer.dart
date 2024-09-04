@@ -4,7 +4,7 @@ import 'package:lodge/screen/detail/detail.dart';
 import 'package:lodge/widget/circle_icon_button.dart';
 
 class BestOffer extends StatefulWidget {
-  BestOffer({Key? key}) : super(key: key);
+  const BestOffer({super.key});
 
   @override
   _BestOfferState createState() => _BestOfferState();
@@ -108,7 +108,7 @@ class _BestOfferState extends State<BestOffer> {
                       right: 0,
                       child: CircleIconButton(
                         iconUrl: 'assets/icons/heart1-svgrepo-com.svg',
-                        color: isFavorite ? Colors.red : Color.fromARGB(255, 255, 255, 255),
+                        color: isFavorite ? Colors.red : const Color.fromARGB(255, 255, 255, 255),
                         onPressed: () {
                           _toggleFavorite(index);
                         },
@@ -118,7 +118,7 @@ class _BestOfferState extends State<BestOffer> {
                 ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

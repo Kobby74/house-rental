@@ -3,6 +3,8 @@ import 'package:lodge/model/house.dart';
 import 'package:lodge/screen/home/widget/search_input.dart';
 
 class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
+
   @override
   _SearchPageState createState() => _SearchPageState();
 }
@@ -24,7 +26,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Houses'),
+        title: const Text('Search Houses'),
       ),
       body: Column(
         children: [
@@ -35,9 +37,9 @@ class _SearchPageState extends State<SearchPage> {
               itemBuilder: (context, index) {
                 final house = searchResults[index];
                 return Card(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   child: ListTile(
-                    contentPadding: EdgeInsets.all(10),
+                    contentPadding: const EdgeInsets.all(10),
                     leading: Image.asset(house.imageUrl, width: 50, height: 50, fit: BoxFit.cover),
                     title: Text(house.name),
                     subtitle: Column(
@@ -49,9 +51,9 @@ class _SearchPageState extends State<SearchPage> {
                         Row(
                           children: [
                             house.buildBedroomIcon(),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             house.buildKitchenIcon(),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             house.buildBathroomIcon(),
                           ],
                         ),

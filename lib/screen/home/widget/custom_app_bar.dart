@@ -5,13 +5,13 @@ import 'package:lodge/login_page.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
-  CustomAppBar(this.title);
+  const CustomAppBar(this.title, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -21,7 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 if (value == 'logout') {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                   );
                 } else {
                 
@@ -29,31 +29,31 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 }
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                PopupMenuItem<String>(
+                const PopupMenuItem<String>(
                   value: 'recommended',
                   child: Text('Recommended'),
                 ),
-                PopupMenuItem<String>(
+                const PopupMenuItem<String>(
                   value: 'near_you',
                   child: Text('Near You'),
                 ),
-                PopupMenuItem<String>(
+                const PopupMenuItem<String>(
                   value: 'best_offer',
                   child: Text('Best Offer'),
                 ),
-                PopupMenuItem<String>(
+                const PopupMenuItem<String>(
                   value: 'agency_recommended',
                   child: Text('Agency Recommended'),
                 ),
-                PopupMenuDivider(),
-                PopupMenuItem<String>(
+                const PopupMenuDivider(),
+                const PopupMenuItem<String>(
                   value: 'logout',
                   child: Text('Logout'),
                 ),
               ],
             ),
-            Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            CircleAvatar(
+            Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const CircleAvatar(
               backgroundImage: AssetImage('assets/images/OIP.jpg'),
             ),
           ],
@@ -63,5 +63,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(50);
+  Size get preferredSize => const Size.fromHeight(50);
 }

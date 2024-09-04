@@ -11,45 +11,45 @@ import 'package:lodge/screen/home/widget/welcom_text.dart';
 class HomePage extends StatelessWidget {
   final String role;
 
-  HomePage({required this.role});
+  const HomePage({super.key, required this.role});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: CustomAppBar('Home'),
+      appBar: const CustomAppBar('Home'),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            WelcomeText(),
+            const WelcomeText(),
             SearchInput(
               onSearch: (query) {
                 print('Search query: $query');
               },
             ),
-            Categories(),
-            RecommendedHouse(),
-            BestOffer(),
+            const Categories(),
+            const RecommendedHouse(),
+            const BestOffer(),
             if (role == 'Owner') ...[
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AddApartment()),
+                      MaterialPageRoute(builder: (context) => const AddApartment()),
                     );
                   },
-                  child: Text('Add Apartment'),
+                  child: const Text('Add Apartment'),
                 ),
               ),
             ],
           ],
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(),
+      bottomNavigationBar: const CustomBottomNavigationBar(),
     );
   }
 }

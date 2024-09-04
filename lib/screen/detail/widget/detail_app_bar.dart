@@ -4,7 +4,7 @@ import 'package:lodge/model/house.dart';
 
 class DetailAppBar extends StatelessWidget {
   final House house;
-  const DetailAppBar({Key? key, required this.house}) : super(key: key);
+  const DetailAppBar({super.key, required this.house});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +30,8 @@ class DetailAppBar extends StatelessWidget {
                       child: Container(
                         height: 20,
                         width: 20,
-                        padding:  EdgeInsets.all(5),
-                        decoration: BoxDecoration(
+                        padding:  const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
                           color: Colors.grey,
                           shape: BoxShape.circle
                         ),
@@ -41,8 +41,8 @@ class DetailAppBar extends StatelessWidget {
                     Container(
                         height: 20,
                         width: 20,
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
                           color: Colors.deepOrange,
                           shape: BoxShape.circle
                         ),

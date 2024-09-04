@@ -5,6 +5,8 @@ import 'package:lodge/screen/home/home.dart';
 import 'package:lodge/widget/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -78,15 +80,15 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('WELCOME TO LODGE🏡'),
-        titleTextStyle: TextStyle(
+        title: const Text('WELCOME TO LODGE🏡'),
+        titleTextStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
             color: Color.fromARGB(255, 250, 147, 181)),
-        backgroundColor: Color.fromARGB(255, 28, 22, 65),
+        backgroundColor: const Color.fromARGB(255, 28, 22, 65),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/city4.png'),
             fit: BoxFit.fill,
@@ -94,15 +96,15 @@ class _LoginPageState extends State<LoginPage> {
         ),
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 DropdownButtonFormField<String>(
                   value: _role,
-                  dropdownColor: Color.fromARGB(255, 28, 22, 65),
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
+                  dropdownColor: const Color.fromARGB(255, 28, 22, 65),
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
                     labelText: 'Select Role',
                     labelStyle: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
@@ -119,11 +121,11 @@ class _LoginPageState extends State<LoginPage> {
                     });
                   },
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 TextField(
                   controller: _emailController,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
                     hintText: 'Enter your email',
                     hintStyle: TextStyle(
                         color: Color.fromARGB(255, 250, 250, 250)),
@@ -132,12 +134,12 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 TextField(
                   controller: _passwordController,
                   obscureText: true,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
                     hintText: 'Enter your password',
                     hintStyle: TextStyle(color: Colors.white),
                     labelText: 'Password',
@@ -145,20 +147,20 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: _login,
                   child: Text(loading),
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
                 Text(
                   _errorMessage,
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: _navigateToSignup,
-                  child: Text('Sign Up'),
+                  child: const Text('Sign Up'),
                 ),
               ],
             ),

@@ -5,12 +5,12 @@ class SearchInput extends StatelessWidget {
   final TextEditingController _searchController = TextEditingController();
   final Function(String) onSearch;
 
-  SearchInput({required this.onSearch});
+  SearchInput({super.key, required this.onSearch});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(15),
+      padding: const EdgeInsets.all(15),
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
@@ -22,10 +22,10 @@ class SearchInput extends StatelessWidget {
           ),
           hintText: 'Search here...',
           prefixIcon: Container(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             child: SvgPicture.asset('assets/icons/search-4-svgrepo-com.svg'),
           ),
-          contentPadding: EdgeInsets.all(2),
+          contentPadding: const EdgeInsets.all(2),
         ),
         onSubmitted: (query) {
           onSearch(query);

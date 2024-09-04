@@ -6,7 +6,7 @@ import 'package:lodge/screen/home/widget/about.dart';
 
 class DetailPage extends StatelessWidget {
   final House house;
-  DetailPage({Key? key, required this.house}) : super(key: key) {
+  DetailPage({super.key, required this.house}) {
     print('DetailPage with house: $house');
   }
 
@@ -15,17 +15,17 @@ class DetailPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Book House'),
+          title: const Text('Book House'),
           content: Text('Are you sure you want to book ${house.name}?'),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Confirm'),
+              child: const Text('Confirm'),
               onPressed: () {
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -47,13 +47,13 @@ class DetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DetailAppBar(house: house),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ContentIntro(house: house),
-            SizedBox(height: 20),
-            About(),
-            SizedBox(height: 25),
+            const SizedBox(height: 20),
+            const About(),
+            const SizedBox(height: 25),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ElevatedButton(
                 onPressed: () => _bookHouse(context),
                 style: ElevatedButton.styleFrom(
@@ -64,8 +64,8 @@ class DetailPage extends StatelessWidget {
                 ),
                 child: Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: const Text(
                     'Book Now',
                     style: TextStyle(
                       color: Colors.white,

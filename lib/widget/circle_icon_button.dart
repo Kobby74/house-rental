@@ -4,8 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CircleIconButton extends StatelessWidget {
   final String iconUrl;
   final Color color;
-  const CircleIconButton({Key? key, required this.iconUrl, required this.color, required Function() onPressed})
-      : super(key: key);
+  const CircleIconButton({super.key, required this.iconUrl, required this.color, required Function() onPressed});
 
   @override
   Widget build(BuildContext context) {

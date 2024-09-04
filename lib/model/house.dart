@@ -30,23 +30,26 @@ class House {
     required this.bathroomSvg,
   });
 
-  
-  factory House.fromJson(Map<String, dynamic> json) {
-    return House(
-      name: json['name'] ?? 'Unknown House',
-      location: json['location'] ?? 'Unknown Location',
-      imageUrl: json['imageUrl'] ?? 'assets/images/placeholder.jpg',
-      description: json['description'] ?? 'No description available',
-      price: json['price'] ?? 'No price available',
-      bedroomSvg: 'assets/icons/bedroom.svg',
-      kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
-      bathroomSvg: 'assets/icons/bathroom.svg',
-      region: json['region'] ?? 'Unknown Region',
-      town: json['town'] ?? 'Unknown Town',
-      country: json['country'] ?? 'Unknown Country',
-      gpsAddress: json['gpsAddress'] ?? 'Unknown GPS Address',
-    );
-  }
+
+factory House.fromJson(Map<String, dynamic> json) {
+  return House(
+    name: json['name'] ?? 'Unknown House',
+    location: json['location'] ?? 'Unknown Location',
+    imageUrl: json['image_urls'] != null && json['image_urls'].isNotEmpty
+        ? json['image_urls'][0]
+        : 'assets/images/placeholder.jpg',
+    description: json['description'] ?? 'No description available',
+    price: json['price'] ?? 'No price available',
+    bedroomSvg: 'assets/icons/bedroom.svg',
+    kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
+    bathroomSvg: 'assets/icons/bathroom.svg',
+    region: json['region'] ?? 'Unknown Region',
+    town: json['town'] ?? 'Unknown Town',
+    country: json['country'] ?? 'Unknown Country',
+    gpsAddress: json['gpsAddress'] ?? 'Unknown GPS Address',
+  );
+}
+
 
 
   static List<House> generateRecommended() {
@@ -181,8 +184,8 @@ class House {
           width: 30,
           height: 30,
         ),
-        SizedBox(width: 5),
-        Text('5 Bedroom'),
+        const SizedBox(width: 5),
+        const Text('5 Bedroom'),
       ],
     );
   }
@@ -195,8 +198,8 @@ class House {
           width: 30,
           height: 30,
         ),
-        SizedBox(width: 5),
-        Text('2 kitchens'),
+        const SizedBox(width: 5),
+        const Text('2 kitchens'),
       ],
     );
   }
@@ -209,8 +212,8 @@ class House {
           width: 30,
           height: 30,
         ),
-        SizedBox(width: 5),
-        Text('3 bathrooms \n3 washrooms'),
+        const SizedBox(width: 5),
+        const Text('3 bathrooms \n3 washrooms'),
       ],
     );
   }
