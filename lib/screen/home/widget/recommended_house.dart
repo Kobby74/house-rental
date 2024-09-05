@@ -22,68 +22,68 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
     fetchRecommendedHouses();
   }
 
-Future<void> fetchRecommendedHouses() async {
-  try {
-    var url = Uri.parse('https://rentapp-api.drevap.com/api/property/');
-    var response = await http.get(url);
+  Future<void> fetchRecommendedHouses() async {
+    try {
+      isLoading = true;
+      var url = Uri.parse('https://rentapp-api.drevap.com/api/property/');
+      var response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      print('Response Body: ${response.body}');
-      var data = jsonDecode(response.body);
-
-      // Check if 'data' is a list or a map
-      if (data is List) {
-        // Directly map the list
-        setState(() {
-          recommendedList = data.map((json) => House.fromJson(json)).toList();
-          isLoading = false;
-        });
-      } else if (data is Map) {
-        // Check if the map contains a list of properties
-        if (data['properties'] != null && data['properties'] is List) {
+      if (response.statusCode == 200) {
+        print('Response Body: ${response.body}');
+        var data = jsonDecode(response.body);
+        // Check if 'data' is a list or a map
+        if (data is List) {
+          // Directly map the list
           setState(() {
-            recommendedList = (data['properties'] as List)
-                .map((json) => House.fromJson(json))
-                .toList();
+            recommendedList = data.map((json) => House.fromJson(json)).toList();
             isLoading = false;
           });
+        } else if (data is Map) {
+          // Check if the map contains a list of properties
+          if (data['data'] != null && data['data'] is List) {
+            setState(() {
+              recommendedList = (data['data'] as List)
+                  .map((json) => House.fromJson(json))
+                  .toList();
+              isLoading = false;
+            });
+          } else {
+            // Handle case where 'properties' is not found or is not a list
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Unexpected data format.')),
+            );
+            setState(() {
+              isLoading = false;
+            });
+          }
         } else {
-          // Handle case where 'properties' is not found or is not a list
+          // Handle unexpected data structure
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Unexpected data format.')),
+            const SnackBar(content: Text('Unexpected data format.')),
           );
           setState(() {
             isLoading = false;
           });
         }
       } else {
-        // Handle unexpected data structure
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Unexpected data format.')),
+          SnackBar(
+              content: Text(
+                  'Failed to load properties. Status code: ${response.statusCode}')),
         );
         setState(() {
           isLoading = false;
         });
       }
-    } else {
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to load properties. Status code: ${response.statusCode}')),
+        SnackBar(content: Text('An error occurred: $e')),
       );
       setState(() {
         isLoading = false;
       });
     }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('An error occurred: $e')),
-    );
-    setState(() {
-      isLoading = false;
-    });
   }
-}
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +96,8 @@ Future<void> fetchRecommendedHouses() async {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
                     return DetailPage(house: recommendedList[index]);
                   }));
                 },
@@ -113,7 +114,8 @@ Future<void> fetchRecommendedHouses() async {
                       Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(recommendedList[index].imageUrl),
+                            image:
+                                NetworkImage(recommendedList[index].imageUrl),
                             fit: BoxFit.cover,
                           ),
                         ),

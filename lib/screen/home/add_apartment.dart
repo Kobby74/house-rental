@@ -25,8 +25,12 @@ class _AddApartmentState extends State<AddApartment> {
   String? _selectedBuildingType;
   String? _selectedApartmentType;
   String? _selectedFurnishing;
-
-  final List<String> _furnishing = ['Furnished', 'Semi-furnished', 'Not Furnished'];
+  var imageUrl;
+  final List<String> _furnishing = [
+    'Furnished',
+    'Semi-furnished',
+    'Not Furnished'
+  ];
 
   Future<void> pickImage() async {
     final ImagePicker picker = ImagePicker();
@@ -35,6 +39,8 @@ class _AddApartmentState extends State<AddApartment> {
     setState(() {
       _image = image;
     });
+    imageUrl = await _uploadImage(File(_image!.path));
+    print(imageUrl);
   }
 
   Future<String?> _uploadImage(File imageFile) async {
@@ -42,13 +48,15 @@ class _AddApartmentState extends State<AddApartment> {
       'POST',
       Uri.parse('https://rentapp-api.drevap.com/api/property/upload'),
     );
-    request.files.add(await http.MultipartFile.fromPath('file', imageFile.path));
+    request.files
+        .add(await http.MultipartFile.fromPath('file', imageFile.path));
 
     var response = await request.send();
     if (response.statusCode == 200) {
       var responseData = await response.stream.bytesToString();
       var jsonResponse = jsonDecode(responseData);
-      return jsonResponse['url']; 
+      print(jsonResponse['data']);
+      return jsonResponse['data'];
     } else {
       return null;
     }
@@ -62,11 +70,10 @@ class _AddApartmentState extends State<AddApartment> {
       return;
     }
 
-    String? imageUrl = await _uploadImage(File(_image!.path));
-
     if (imageUrl == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to upload image. Please try again.')),
+        const SnackBar(
+            content: Text('Failed to upload image. Please try again.')),
       );
       return;
     }
@@ -113,7 +120,7 @@ class _AddApartmentState extends State<AddApartment> {
           "isRenting": "1",
           "isSelling": "0",
           "isActive": "1",
-          "image_urls": [imageUrl],
+          "image_urls": imageUrl,
         });
 
         var response = await http.post(
@@ -129,7 +136,8 @@ class _AddApartmentState extends State<AddApartment> {
 
         if (response.statusCode == 200) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('House details uploaded successfully!')),
+            const SnackBar(
+                content: Text('House details uploaded successfully!')),
           );
 
           _houseNameController.clear();
@@ -149,7 +157,9 @@ class _AddApartmentState extends State<AddApartment> {
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Failed to upload house details. Please try again.')),
+            const SnackBar(
+                content:
+                    Text('Failed to upload house details. Please try again.')),
           );
         }
       } catch (e) {
@@ -159,7 +169,8 @@ class _AddApartmentState extends State<AddApartment> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all fields and select an image')),
+        const SnackBar(
+            content: Text('Please fill all fields and select an image')),
       );
     }
   }
@@ -299,7 +310,6 @@ class _AddApartmentState extends State<AddApartment> {
                 ? const Text('No image selected.')
                 : Image.file(File(_image!.path)),
             const SizedBox(height: 10.0),
-
             ElevatedButton(
               onPressed: pickImage,
               child: const Text('Pick Image'),
