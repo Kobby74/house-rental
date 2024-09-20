@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) {
           final Map<String, String> args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-          return HomePage(role: args['role']!);
+          return HomePage(role: args['role']!, username: args['username']!,);
         },
         '/add_apartment': (context) => const AddApartment(),
       },

@@ -1,5 +1,5 @@
+// ignore: unused_import
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class House {
   String name;
@@ -11,9 +11,10 @@ class House {
   String town;
   String country;
   String gpsAddress;
-  String bedroomSvg;
-  String kitchenSvg;
-  String bathroomSvg;
+  String buildingType;
+  String apartmentType;
+  String furnishing;
+
 
   House({
     required this.name,
@@ -25,9 +26,9 @@ class House {
     required this.town,
     required this.country,
     required this.gpsAddress,
-    required this.bedroomSvg,
-    required this.kitchenSvg,
-    required this.bathroomSvg,
+    required this.furnishing,
+    required this.buildingType,
+    required this.apartmentType,
   });
 
 
@@ -40,13 +41,13 @@ factory House.fromJson(Map<String, dynamic> json) {
         : 'assets/images/placeholder.jpg',
     description: json['description'] ?? 'No description available',
     price: json['price'] ?? 'No price available',
-    bedroomSvg: 'assets/icons/bedroom.svg',
-    kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
-    bathroomSvg: 'assets/icons/bathroom.svg',
     region: json['region'] ?? 'Unknown Region',
     town: json['town'] ?? 'Unknown Town',
     country: json['country'] ?? 'Unknown Country',
     gpsAddress: json['gpsAddress'] ?? 'Unknown GPS Address',
+    furnishing: json['furnishing'] ?? 'Unknown Furnishing',
+    buildingType: json['buildingType'] ?? 'Unknown Building Type',
+    apartmentType: json['apartmentType'] ?? 'Unknown Apartment Type',
   );
 }
 
@@ -60,13 +61,13 @@ factory House.fromJson(Map<String, dynamic> json) {
         imageUrl: 'assets/images/OIP2.jpg',
         description: '📍6000 sqft\n🅿Parking loft',
         price: '💰GH₵6500/month',
-        bedroomSvg: 'assets/icons/bedroom.svg',
-        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
-        bathroomSvg: 'assets/icons/bathroom.svg',
         region: 'Greater Accra',
         town: 'Tema',
         country: 'Ghana',
         gpsAddress: '5.7323, -0.0333',
+        furnishing: 'Fully Furnished',
+        buildingType: 'Apartment',
+        apartmentType: '3 Bedroom',
       ),
       House(
         name: 'Willow Way',
@@ -74,13 +75,13 @@ factory House.fromJson(Map<String, dynamic> json) {
         imageUrl: 'assets/images/R.jpg',
         description: '4000 sqft',
         price: 'GH₵4800/month',
-        bedroomSvg: 'assets/icons/bedroom.svg',
-        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
-        bathroomSvg: 'assets/icons/bathroom.svg',
         region: 'Greater Accra',
         town: 'TseAddo',
         country: 'Ghana',
         gpsAddress: '5.7323, -0.0333',
+        furnishing: 'semi-furnished',
+        apartmentType: '2 bedroom',
+        buildingType: '',
       ),
       House(
         name: 'The Oak Plus',
@@ -88,13 +89,13 @@ factory House.fromJson(Map<String, dynamic> json) {
         imageUrl: 'assets/images/The Oak Plus.jpg',
         description: '4400 sqft',
         price: 'GH₵5200/month',
-        bedroomSvg: 'assets/icons/bedroom.svg',
-        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
-        bathroomSvg: 'assets/icons/bathroom.svg',
         region: 'Greater Accra',
         town: 'Tesano',
         country: 'Ghana',
         gpsAddress: '5.7323, -0.0333',
+        furnishing: 'Fully Furnished',
+        apartmentType: '3 Bedroom',
+        buildingType: '',
       ),
       House(
         name: 'Mizu',
@@ -102,13 +103,13 @@ factory House.fromJson(Map<String, dynamic> json) {
         imageUrl: 'assets/images/R2.jpg',
         description: '4700 sqft',
         price: 'GH₵5600/month',
-        bedroomSvg: 'assets/icons/bedroom.svg',
-        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
-        bathroomSvg: 'assets/icons/bathroom.svg',
         region: 'Greater Accra',
         town: 'TseAddo',
         country: 'Ghana',
         gpsAddress: '5.7323, -0.0333',
+        furnishing: 'Fully Furnished',
+        apartmentType: '4 Bedroom',
+        buildingType: '',
       ),
     ];
   }
@@ -122,13 +123,13 @@ factory House.fromJson(Map<String, dynamic> json) {
         imageUrl: 'assets/images/MR7435.jpg',
         description: '6000 sqft',
         price: 'GH₵4500/month',
-        bedroomSvg: 'assets/icons/bedroom.svg',
-        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
-        bathroomSvg: 'assets/icons/bathroom.svg',
         region: 'Greater Accra',
         town: 'East Legon-hills',
         country: 'Ghana',
         gpsAddress: '5.7323, -0.0333',
+        furnishing: 'semi-Furnished',
+        apartmentType: '3 Bedroom',
+        buildingType: '',
       ),
       House(
         name: 'Cresent Home',
@@ -136,13 +137,13 @@ factory House.fromJson(Map<String, dynamic> json) {
         imageUrl: 'assets/images/b114e8fae7fdee6_t_w_800_h_600.jpeg',
         description: '6000 sqft',
         price: 'GH₵4500/month',
-        bedroomSvg: 'assets/icons/bedroom.svg',
-        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
-        bathroomSvg: 'assets/icons/bathroom.svg',
         region: 'Greater Accra',
         town: 'Devtracco-Tema',
         country: 'Ghana',
         gpsAddress: '5.7323, -0.0333',
+        furnishing: 'Not Furnished',
+        apartmentType: '2 Bedroom',
+        buildingType: '',
       ),
       House(
         name: 'White Galaxy',
@@ -150,13 +151,13 @@ factory House.fromJson(Map<String, dynamic> json) {
         imageUrl: 'assets/images/4-bed-2a.jpg',
         description: '6000 sqft',
         price: 'GH₵4500/month',
-        bedroomSvg: 'assets/icons/bedroom.svg',
-        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
-        bathroomSvg: 'assets/icons/bathroom.svg',
         region: 'Greater Accra',
         town: 'Tesano-Accra',
         country: 'Ghana',
         gpsAddress: '5.7323, -0.0333',
+        furnishing: 'Furnished',
+        apartmentType: '4 Bedroom',
+        buildingType: '',
       ),
       House(
         name: 'Hart lane',
@@ -164,57 +165,15 @@ factory House.fromJson(Map<String, dynamic> json) {
         imageUrl: 'assets/images/OIP.jpg',
         description: '6000 sqft',
         price: 'GH₵4500/month',
-        bedroomSvg: 'assets/icons/bedroom.svg',
-        kitchenSvg: 'assets/icons/kitchen-room-svgrepo-com.svg',
-        bathroomSvg: 'assets/icons/bathroom.svg',
         region: 'Greater Accra',
         town: 'Sakumono-Comm.14',
         country: 'Ghana',
         gpsAddress: '5.7323, -0.0333',
+        furnishing: 'Not Furnished',
+        apartmentType: '3 Bedroom',
+        buildingType: '',
       ),
     ];
   }
-
-  
-  Widget buildBedroomIcon() {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          bedroomSvg,
-          width: 30,
-          height: 30,
-        ),
-        const SizedBox(width: 5),
-        const Text('5 Bedroom'),
-      ],
-    );
-  }
-
-  Widget buildKitchenIcon() {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          kitchenSvg,
-          width: 30,
-          height: 30,
-        ),
-        const SizedBox(width: 5),
-        const Text('2 kitchens'),
-      ],
-    );
-  }
-
-  Widget buildBathroomIcon() {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          bathroomSvg,
-          width: 30,
-          height: 30,
-        ),
-        const SizedBox(width: 5),
-        const Text('3 bathrooms \n3 washrooms'),
-      ],
-    );
-  }
 }
+

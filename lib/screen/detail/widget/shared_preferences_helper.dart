@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesHelper {
   static const String bookmarkedHousesKey = 'bookmarked_houses';
 
- 
   static Future<void> saveBookmarkedHouses(List<int> houseIds) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> houseIdsString = houseIds.map((id) => id.toString()).toList();

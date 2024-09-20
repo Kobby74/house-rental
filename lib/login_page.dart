@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   String _errorMessage = '';
   String _role = 'Buyer';
-  String loading = 'login';
+  String loading = 'Login';
 
   void _login() async {
     String email = _emailController.text.trim();
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
       });
 
       setState(() {
-        loading = 'loading...';
+        loading = 'Loading...';
       });
 
       var response = await http.post(
@@ -43,18 +43,28 @@ class _LoginPageState extends State<LoginPage> {
         body: body,
       );
       print('Status Code: ${response.statusCode}');
-      print('Response Body:${response.body}');
+      print('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
+        // Parse the response to extract the username
+        Map<String, dynamic> responseBody = jsonDecode(response.body);
+        String username = responseBody['name'] ?? 'Unknown User'; // Extract username from response
+                print('Reponse username: $username');
+
+
+        // Navigate to HomePage and pass the role and username
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => HomePage(role: _role),
+            builder: (context) => HomePage(
+              role: _role,
+              username: username,
+            ),
           ),
         );
       } else {
         setState(() {
-          loading = 'retry';
+          loading = 'Retry';
           _errorMessage = 'Invalid email or password. Please try again.';
         });
       }
@@ -129,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: 'Enter your email',
                     hintStyle: TextStyle(
                         color: Color.fromARGB(255, 250, 250, 250)),
-                    labelText: 'email',
+                    labelText: 'Email',
                     labelStyle: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),

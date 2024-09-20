@@ -27,23 +27,29 @@ class _AddApartmentState extends State<AddApartment> {
   String? _selectedFurnishing;
   var imageUrl;
   final List<String> _furnishing = [
-    'furnished',
-    'semi furnished',
-    'not furnished',
+    'Furnished',
+    'Semi-furnished',
+    'Not Furnished'
   ];
 
   Future<void> pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
+    if (image == null) {
+      print('No image selected.');
+      return;
+    }
     setState(() {
       _image = image;
     });
+    print('Image path: ${_image!.path}');
     imageUrl = await _uploadImage(File(_image!.path));
     print(imageUrl);
   }
 
-  Future<List<String?>?> _uploadImage(File imageFile) async {
+  Future<String?> _uploadImage(File imageFile) async {
+    try{
     var request = http.MultipartRequest(
       'POST',
       Uri.parse('https://rentapp-api.drevap.com/api/property/upload'),
@@ -55,15 +61,17 @@ class _AddApartmentState extends State<AddApartment> {
     if (response.statusCode == 200) {
       var responseData = await response.stream.bytesToString();
       var jsonResponse = jsonDecode(responseData);
-      if (jsonResponse['data'] != null && jsonResponse['data'] is List) {
-        List<String> dataList = List<String>.from(jsonResponse['data']);
-        print(dataList); return dataList;
-      }
-      //print(jsonResponse['data']);
-      //return jsonResponse['data'];
+      print(jsonResponse['data']);
+      return jsonResponse['data'];
     } else {
+         print('Failed to upload image. Status code: ${response.statusCode}');
       return null;
     }
+    } catch (e) {
+        print('Error during image upload: $e');
+        return null;
+  }
+
   }
 
   void _uploadHouseDetails() async {

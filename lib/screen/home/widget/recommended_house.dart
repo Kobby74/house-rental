@@ -31,15 +31,15 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
       if (response.statusCode == 200) {
         print('Response Body: ${response.body}');
         var data = jsonDecode(response.body);
-        // Check if 'data' is a list or a map
+        
         if (data is List) {
-          // Directly map the list
+          
           setState(() {
             recommendedList = data.map((json) => House.fromJson(json)).toList();
             isLoading = false;
           });
         } else if (data is Map) {
-          // Check if the map contains a list of properties
+
           if (data['data'] != null && data['data'] is List) {
             setState(() {
               recommendedList = (data['data'] as List)
@@ -48,7 +48,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
               isLoading = false;
             });
           } else {
-            // Handle case where 'properties' is not found or is not a list
+            
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Unexpected data format.')),
             );
@@ -57,7 +57,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
             });
           }
         } else {
-          // Handle unexpected data structure
+          
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Unexpected data format.')),
           );
@@ -111,6 +111,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                   ),
                   child: Stack(
                     children: [
+                      recommendedList[index].imageUrl.isNotEmpty ?
                       Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
@@ -119,7 +120,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                      ),
+                      ): const Center(child: Text('No Image Available'),),
                       Positioned(
                         right: 15,
                         top: 15,
