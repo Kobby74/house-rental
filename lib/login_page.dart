@@ -46,13 +46,11 @@ class _LoginPageState extends State<LoginPage> {
       print('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
-        // Parse the response to extract the username
         Map<String, dynamic> responseBody = jsonDecode(response.body);
-        String username = responseBody['name'] ?? 'Unknown User'; // Extract username from response
+        String username = responseBody['name'] ?? 'Unknown User';
                 print('Reponse username: $username');
 
 
-        // Navigate to HomePage and pass the role and username
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

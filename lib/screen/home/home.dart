@@ -64,6 +64,7 @@ class _HomePageState extends State<HomePage> {
               const Categories(),
               const RecommendedHouse(),
               const BestOffer(),
+              
               if (widget.role == 'Owner') ...[
                 const SizedBox(height: 20),
                 Padding(
@@ -84,7 +85,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavigationBar(),
+      bottomNavigationBar:  CustomBottomNavigationBar(),
     );
   }
 }

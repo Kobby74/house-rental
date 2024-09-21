@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lodge/login_page.dart';
 import 'package:lodge/screen/home/add_apartment.dart';
 import 'package:lodge/screen/home/home.dart';
+import 'package:lodge/screen/home/widget/searchpage.dart';
 
 
 void main() {
@@ -26,6 +27,8 @@ class MyApp extends StatelessWidget {
           return HomePage(role: args['role']!, username: args['username']!,);
         },
         '/add_apartment': (context) => const AddApartment(),
+        '/search':(context) => SearchPage(),
+        
       },
     );
   }

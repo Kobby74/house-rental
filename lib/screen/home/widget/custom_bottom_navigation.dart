@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lodge/screen/home/home.dart';
+import 'package:lodge/screen/home/widget/bookmarks.dart';
+import 'package:lodge/screen/home/widget/chat.dart';
+import 'package:lodge/screen/home/widget/notifications.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   const CustomBottomNavigationBar({super.key});
@@ -23,32 +27,31 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     setState(() {
       _selectedIndex = index;
     });
-    void onItemTapped(int index) {
-  setState(() {
-    _selectedIndex = index;
-  });
 
-  switch (index) {
-    case 0:
-      Navigator.pushNamed(context, '/home');
-      break;
-    case 1:
-      Navigator.pushNamed(context, '/search');
-      break;
-    case 2:
-      Navigator.pushNamed(context, '/notifications');
-      break;
-    case 3:
-      Navigator.pushNamed(context, '/chat');
-      break;
-    case 4:
-      Navigator.pushNamed(context, '/bookmarks');
-      break;
-    default:
-      Navigator.pushNamed(context, '/home');
-  }
-}
 
+    switch (index) {
+      case 0:
+        Navigator.push(context, MaterialPageRoute(builder: 
+        (context) => const HomePage(role: 'role', username: 'username',)));
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/search');
+        break;
+      case 2:
+        Navigator.push(context, MaterialPageRoute(builder: 
+        (context) => const NotificationsScreen()));
+        break;
+      case 3:
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context)=> const ChatScreen(chatId: '123')));
+        break;
+      case 4:
+        Navigator.push(context, MaterialPageRoute(builder: 
+        (context) => BookmarksScreen()));
+        break;
+      default:
+        Navigator.pushNamed(context, '/home');
+    }
   }
 
   @override

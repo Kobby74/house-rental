@@ -14,7 +14,7 @@ class WelcomeText extends StatelessWidget{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Hello $username!',
+            'Hello!',
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
               fontSize: 16,
               fontWeight: FontWeight.bold,
