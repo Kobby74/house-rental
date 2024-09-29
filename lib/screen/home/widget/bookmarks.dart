@@ -67,11 +67,11 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                     trailing: IconButton(
                       icon: Icon(Icons.delete, color: Colors.redAccent),
                       onPressed: () {
-                        // Handle removal of bookmark
+                      
                       },
                     ),
                     onTap: () {
-                      // Navigate to property details
+                     
                     },
                   ),
                 );

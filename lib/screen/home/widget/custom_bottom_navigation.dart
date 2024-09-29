@@ -6,7 +6,8 @@ import 'package:lodge/screen/home/widget/chat.dart';
 import 'package:lodge/screen/home/widget/notifications.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
-  const CustomBottomNavigationBar({super.key});
+  final String name;
+  const CustomBottomNavigationBar({super.key,required this.name});
 
   @override
   _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
@@ -32,7 +33,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     switch (index) {
       case 0:
         Navigator.push(context, MaterialPageRoute(builder: 
-        (context) => const HomePage(role: 'role', username: 'username',)));
+        (context) =>  HomePage(role: 'role', name: widget.name, phoneNumber: 'phoneNumber',)));
         break;
       case 1:
         Navigator.pushNamed(context, '/search');

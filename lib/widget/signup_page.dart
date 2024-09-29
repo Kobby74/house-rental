@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class SignupPage extends StatefulWidget {
   final Function(String, String) onSignup;
-
   const SignupPage({super.key, required this.onSignup});
 
   @override
@@ -15,6 +15,8 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  bool _obscurePassword = true;
   String _errorMessage = '';
   String loading = 'Sign Up';
 
@@ -22,6 +24,7 @@ class _SignupPageState extends State<SignupPage> {
     String username = _usernameController.text.trim();
     String password = _passwordController.text.trim();
     String email = _emailController.text.trim();
+    String phonenumber = _phoneController.text.trim();
 
     if (username.isNotEmpty && password.isNotEmpty && email.isNotEmpty) {
       var url = Uri.parse('https://rentapp-api.drevap.com/api/auth/register');
@@ -30,7 +33,9 @@ class _SignupPageState extends State<SignupPage> {
         'name': username,
         'password': password,
         'email': email,
+        'msisdn': phonenumber,
       });
+
       setState(() {
         loading = 'Signing Up...';
       });
@@ -51,7 +56,7 @@ class _SignupPageState extends State<SignupPage> {
         final rest = response.body;
         Map<String, dynamic> responseBody = jsonDecode(response.body);
         setState(() {
-        loading = 'retry';
+          loading = 'Retry';
           _errorMessage = responseBody['message'];
         });
         print('Signup failed with status: ${response.statusCode}');
@@ -70,9 +75,9 @@ class _SignupPageState extends State<SignupPage> {
       appBar: AppBar(
         title: const Text('Sign Up📝'),
         titleTextStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-            color: Color.fromARGB(255, 250, 147, 181)),
+          fontWeight: FontWeight.bold,
+          fontSize: 25,
+          color: Color.fromARGB(255, 250, 147, 181)),
         backgroundColor: const Color.fromARGB(255, 28, 22, 65),
       ),
       body: Container(
@@ -92,9 +97,9 @@ class _SignupPageState extends State<SignupPage> {
                 controller: _usernameController,
                 style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
-                  labelText: 'name',
+                  labelText: 'Name',
                   labelStyle: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                    color: Colors.white, fontWeight: FontWeight.bold),
                   hintText: 'Create a name',
                   hintStyle: TextStyle(color: Colors.white),
                 ),
@@ -103,13 +108,25 @@ class _SignupPageState extends State<SignupPage> {
               TextField(
                 controller: _passwordController,
                 style: const TextStyle(color: Colors.white),
-                obscureText: true,
-                decoration: const InputDecoration(
+                obscureText: _obscurePassword,
+                decoration: InputDecoration(
                   labelText: 'Password',
-                  labelStyle: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                  labelStyle: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
                   hintText: 'Enter your password',
-                  hintStyle: TextStyle(color: Colors.white),
+                  hintStyle: const TextStyle(color: Colors.white),
+                  suffixIcon: IconButton(
+                    icon: SvgPicture.asset(
+                      _obscurePassword
+                      ? 'assets/icons/eye-slash-alt-svgrepo-com.svg' : 'assets/icons/eye-svgrepo-com.svg',
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 12.0),
@@ -120,8 +137,21 @@ class _SignupPageState extends State<SignupPage> {
                 decoration: const InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                    color: Colors.white, fontWeight: FontWeight.bold),
                   hintText: 'Enter your email',
+                  hintStyle: TextStyle(color: Colors.white),
+                ),
+              ),
+              const SizedBox(height: 12.0),
+              TextField(
+                controller: _phoneController,
+                style: const TextStyle(color: Colors.white),
+                keyboardType: TextInputType.phone,
+                decoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                  labelStyle: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
+                  hintText: 'Enter your phone number',
                   hintStyle: TextStyle(color: Colors.white),
                 ),
               ),

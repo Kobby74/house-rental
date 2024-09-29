@@ -24,12 +24,13 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) {
           final Map<String, String> args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-          return HomePage(role: args['role']!, username: args['username']!,);
+          return HomePage(role: args['role']!, name:'name', phoneNumber: 'phoneNumber',);
         },
         '/add_apartment': (context) => const AddApartment(),
         '/search':(context) => SearchPage(),
         
       },
+      debugShowCheckedModeBanner: false,
     );
-  }
+  } 
 }

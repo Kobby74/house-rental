@@ -10,9 +10,9 @@ import 'package:lodge/screen/home/widget/welcom_text.dart';
 
 class HomePage extends StatefulWidget {
   final String role;
-  final String username;
+  final String name;
 
-  const HomePage({super.key, required this.role, required this.username});
+  const HomePage({super.key, required this.role, required this.name, required String phoneNumber});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              WelcomeText(username: widget.username),
+               WelcomeText(name: widget.name),
               SearchInput(
                 onSearch: (query) {
                   print('Search query: $query');
@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      bottomNavigationBar:  CustomBottomNavigationBar(),
+      bottomNavigationBar: CustomBottomNavigationBar(name: widget.name,),
     );
   }
 }

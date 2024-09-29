@@ -1,8 +1,9 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddApartment extends StatefulWidget {
   const AddApartment({super.key});
@@ -20,36 +21,55 @@ class _AddApartmentState extends State<AddApartment> {
   final TextEditingController _townController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _gpsAddressController = TextEditingController();
+  
   XFile? _image;
-
+  String? _token; // For storing the access token
   String? _selectedBuildingType;
   String? _selectedApartmentType;
   String? _selectedFurnishing;
   var imageUrl;
+
   final List<String> _furnishing = [
     'furnished',
     'semi furnished',
     'not furnished',
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    _retrieveToken();
+  }
+
+  // Function to retrieve token from SharedPreferences
+  Future<void> _retrieveToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _token = prefs.getString('access_token');
+    });
+  }
+
+  // Pick image from gallery
   Future<void> pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      _image = image;
-    });
-    imageUrl = await _uploadImage(File(_image!.path));
-    print(imageUrl);
+    if (image != null) {
+      setState(() {
+        _image = image;
+      });
+      imageUrl = await _uploadImage(File(_image!.path));
+      print(imageUrl);
+    }
   }
 
+  // Upload image to the server
   Future<List<String?>?> _uploadImage(File imageFile) async {
     var request = http.MultipartRequest(
       'POST',
       Uri.parse('https://rentapp-api.drevap.com/api/property/upload'),
     );
-    request.files
-        .add(await http.MultipartFile.fromPath('images[]', imageFile.path));
+    request.files.add(await http.MultipartFile.fromPath('images[]', imageFile.path));
 
     var response = await request.send();
     if (response.statusCode == 200) {
@@ -57,27 +77,18 @@ class _AddApartmentState extends State<AddApartment> {
       var jsonResponse = jsonDecode(responseData);
       if (jsonResponse['data'] != null && jsonResponse['data'] is List) {
         List<String> dataList = List<String>.from(jsonResponse['data']);
-        print(dataList); return dataList;
+        return dataList;
       }
-      //print(jsonResponse['data']);
-      //return jsonResponse['data'];
     } else {
       return null;
     }
   }
 
+  // Upload house details
   void _uploadHouseDetails() async {
-    if (_image == null) {
+    if (_image == null || imageUrl == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select an image')),
-      );
-      return;
-    }
-
-    if (imageUrl == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Failed to upload image. Please try again.')),
+        const SnackBar(content: Text('Please select and upload an image first.')),
       );
       return;
     }
@@ -105,9 +116,9 @@ class _AddApartmentState extends State<AddApartment> {
         buildingType != null &&
         apartmentType != null &&
         furnishing != null) {
+      
       try {
         var url = Uri.parse('https://rentapp-api.drevap.com/api/property/add');
-
         var body = jsonEncode({
           "name": houseName,
           "description": description,
@@ -130,40 +141,21 @@ class _AddApartmentState extends State<AddApartment> {
         var response = await http.post(
           url,
           headers: {
+            'Authorization': 'Bearer $_token',
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
           body: body,
         );
-        print('Add Property Status Code: ${response.statusCode}');
-        print('Add Property Response Body: ${response.body}');
 
         if (response.statusCode == 200) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text('House details uploaded successfully!')),
+            const SnackBar(content: Text('House details uploaded successfully!')),
           );
-
-          _houseNameController.clear();
-          _descriptionController.clear();
-          _priceController.clear();
-          _locationController.clear();
-          _regionController.clear();
-          _townController.clear();
-          _countryController.clear();
-          _gpsAddressController.clear();
-
-          setState(() {
-            _selectedBuildingType = null;
-            _selectedApartmentType = null;
-            _selectedFurnishing = null;
-            _image = null;
-          });
+          _clearForm();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content:
-                    Text('Failed to upload house details. Please try again.')),
+            const SnackBar(content: Text('Failed to upload house details.')),
           );
         }
       } catch (e) {
@@ -173,10 +165,28 @@ class _AddApartmentState extends State<AddApartment> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Please fill all fields and select an image')),
+        const SnackBar(content: Text('Please fill all fields.')),
       );
     }
+  }
+
+  // Function to clear the form after successful submission
+  void _clearForm() {
+    _houseNameController.clear();
+    _descriptionController.clear();
+    _priceController.clear();
+    _locationController.clear();
+    _regionController.clear();
+    _townController.clear();
+    _countryController.clear();
+    _gpsAddressController.clear();
+
+    setState(() {
+      _selectedBuildingType = null;
+      _selectedApartmentType = null;
+      _selectedFurnishing = null;
+      _image = null;
+    });
   }
 
   @override

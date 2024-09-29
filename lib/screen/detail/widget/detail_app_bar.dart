@@ -41,8 +41,8 @@ class DetailAppBar extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                     child: Container(
-                      height: 20,
-                      width: 20,
+                      height: 35,
+                      width: 35,
                       padding: const EdgeInsets.all(5),
                       decoration: const BoxDecoration(
                         color: Colors.grey,
@@ -50,16 +50,6 @@ class DetailAppBar extends StatelessWidget {
                       ),
                       child: SvgPicture.asset('assets/icons/left-arrow22.svg'),
                     ),
-                  ),
-                  Container(
-                    height: 20,
-                    width: 20,
-                    padding: const EdgeInsets.all(5),
-                    decoration: const BoxDecoration(
-                      color: Colors.deepOrange,
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset('assets/icons/bookmark22.svg'),
                   ),
                 ],
               ),

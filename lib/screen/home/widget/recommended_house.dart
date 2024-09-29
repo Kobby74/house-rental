@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class RecommendedHouse extends StatefulWidget {
   const RecommendedHouse({super.key});
-
   @override
   _RecommendedHouseState createState() => _RecommendedHouseState();
 }
@@ -16,20 +15,20 @@ class RecommendedHouse extends StatefulWidget {
 class _RecommendedHouseState extends State<RecommendedHouse> {
   List<House> recommendedList = [];
   bool isLoading = false;
-  String? loggedInUserId; // Store logged-in user ID
-  final Set<int> bookmarkedSet = {}; // Track the bookmarked houses
+  final Set<int> bookmarkedSet = {};
+  String? _role; // To store the role of the logged-in user
 
   @override
   void initState() {
     super.initState();
-    fetchUserId(); // Fetch logged-in user ID first
+    _loadUserRole();
     fetchRecommendedHouses();
   }
 
-  Future<void> fetchUserId() async {
+  Future<void> _loadUserRole() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      loggedInUserId = prefs.getString('user_id'); // Assuming 'user_id' was saved after login
+      _role = prefs.getString('userRole') ?? 'Buyer'; // Default to Buyer if null
     });
   }
 
@@ -82,32 +81,6 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
     }
   }
 
-  // Function to delete a property
-  Future<void> _deleteProperty(String propertyId, int index) async {
-    try {
-      var url = Uri.parse('https://rentapp-api.drevap.com/api/property/delete');
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('access_token'); // Fetch bearer token
-      var response = await http.get(
-        url,
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        setState(() {
-          recommendedList.removeAt(index); // Remove the property from the list on successful delete
-        });
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Property deleted successfully')));
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to delete property')));
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred: $e')));
-    }
-  }
-
   // Function to toggle bookmarks
   void _toggleBookmark(int index) {
     setState(() {
@@ -117,6 +90,63 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
         bookmarkedSet.add(index);
       }
     });
+  }
+
+  // Function to delete property
+  Future<void> _deleteProperty(int id, int index) async {
+    try {
+      var url = Uri.parse('https://rentapp-api.drevap.com/api/property/delete/$id');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('access_token');
+      var response = await http.get(
+        url,
+        headers: {
+          'Authentication': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          recommendedList.removeAt(index); // Remove from the list
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Property deleted successfully')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete property. Status code: ${response.statusCode}')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred: $e')),
+      );
+    }
+  }
+
+  // Show confirmation dialog before deleting
+  void _confirmDelete(int propertyId, int index) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Property'),
+        content: const Text('Are you sure you want to delete this property?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(), // Cancel
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close dialog
+              _deleteProperty(propertyId, index); // Proceed with delete
+            },
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -129,10 +159,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
           : ListView.separated(
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                bool isBookmarked = bookmarkedSet.contains(index); // Check if bookmarked
-                var house = recommendedList[index];
-                bool isOwner = house.ownerId == loggedInUserId; // Check if logged-in user is the owner
-
+                bool isBookmarked = bookmarkedSet.contains(index);
                 return GestureDetector(
                   onTap: () {
                     Navigator.of(context)
@@ -142,7 +169,7 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                   },
                   child: Container(
                     height: 300,
-                    width: 200,
+                    width: 400,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -160,6 +187,19 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                                 ),
                               )
                             : const Center(child: Text('No Image Available')),
+                             Positioned(top: 10,
+                            right: 10,
+                            child: CircleIconButton(
+                                  iconUrl: isBookmarked
+                                      ? 'assets/icons/bookmark.svg'
+                                      : 'assets/icons/bookmark22.svg',
+                                  color: isBookmarked ? Colors.orange : Colors.grey,
+                                  onPressed: () {
+                                    _toggleBookmark(index);
+                                  },
+                                ),
+                                ),
+
                         Positioned(
                           bottom: 0,
                           left: 0,
@@ -198,22 +238,15 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
                                     const SizedBox(height: 5),
                                   ],
                                 ),
-                                if (isOwner) // Show delete button only for the owner
+
+                                // Show Delete Button if the user is an "Owner"
+                                if (_role == 'Owner')
                                   IconButton(
                                     icon: const Icon(Icons.delete, color: Colors.red),
                                     onPressed: () {
-                                      _deleteProperty(house.id.toString(), index);
+                                      _confirmDelete(recommendedList[index].id, index);
                                     },
                                   ),
-                                CircleIconButton(
-                                  iconUrl: isBookmarked
-                                      ? 'assets/icons/bookmark.svg'  // Icon for bookmarked state
-                                      : 'assets/icons/bookmark22.svg', // Default icon
-                                  color: isBookmarked ? Colors.orange : Colors.grey, // Change color when bookmarked
-                                  onPressed: () {
-                                    _toggleBookmark(index); // Toggle bookmark state
-                                  },
-                                ),
                               ],
                             ),
                           ),
@@ -229,3 +262,5 @@ class _RecommendedHouseState extends State<RecommendedHouse> {
     );
   }
 }
+                                      
+ 

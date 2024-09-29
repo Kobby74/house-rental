@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 class House {
+  final int id;
   String name;
   String location;
   String description;
@@ -17,6 +18,7 @@ class House {
 
 
   House({
+    required this.id,
     required this.name,
     required this.location,
     required this.imageUrl,
@@ -29,11 +31,13 @@ class House {
     required this.furnishing,
     required this.buildingType,
     required this.apartmentType,
+
   });
 
 
 factory House.fromJson(Map<String, dynamic> json) {
   return House(
+    id: json['id'] ?? 'Unknown id',
     name: json['name'] ?? 'Unknown House',
     location: json['location'] ?? 'Unknown Location',
     imageUrl: json['image_urls'] != null && json['image_urls'].isNotEmpty
@@ -56,6 +60,7 @@ factory House.fromJson(Map<String, dynamic> json) {
   static List<House> generateRecommended() {
     return [
       House(
+        id: 1,
         name: 'Chestnut House',
         location: 'Community 5, Tema',
         imageUrl: 'assets/images/OIP2.jpg',
@@ -68,8 +73,10 @@ factory House.fromJson(Map<String, dynamic> json) {
         furnishing: 'Fully Furnished',
         buildingType: 'Apartment',
         apartmentType: '3 Bedroom',
+
       ),
       House(
+        id: 2,
         name: 'Willow Way',
         location: 'TseAddo',
         imageUrl: 'assets/images/R.jpg',
@@ -82,8 +89,10 @@ factory House.fromJson(Map<String, dynamic> json) {
         furnishing: 'semi-furnished',
         apartmentType: '2 bedroom',
         buildingType: '',
+
       ),
       House(
+        id: 3,
         name: 'The Oak Plus',
         location: 'Tesano',
         imageUrl: 'assets/images/The Oak Plus.jpg',
@@ -96,8 +105,10 @@ factory House.fromJson(Map<String, dynamic> json) {
         furnishing: 'Fully Furnished',
         apartmentType: '3 Bedroom',
         buildingType: '',
+
       ),
       House(
+        id: 4,
         name: 'Mizu',
         location: 'TseAddo',
         imageUrl: 'assets/images/R2.jpg',
@@ -110,6 +121,7 @@ factory House.fromJson(Map<String, dynamic> json) {
         furnishing: 'Fully Furnished',
         apartmentType: '4 Bedroom',
         buildingType: '',
+
       ),
     ];
   }
@@ -118,6 +130,7 @@ factory House.fromJson(Map<String, dynamic> json) {
   static List<House> generateBestOffer() {
     return [
       House(
+        id: 1,
         name: 'Milky Way',
         location: 'East Legon-hills',
         imageUrl: 'assets/images/MR7435.jpg',
@@ -130,8 +143,10 @@ factory House.fromJson(Map<String, dynamic> json) {
         furnishing: 'semi-Furnished',
         apartmentType: '3 Bedroom',
         buildingType: '',
+
       ),
       House(
+        id: 2,
         name: 'Cresent Home',
         location: 'Devtracco-Tema',
         imageUrl: 'assets/images/b114e8fae7fdee6_t_w_800_h_600.jpeg',
@@ -144,8 +159,10 @@ factory House.fromJson(Map<String, dynamic> json) {
         furnishing: 'Not Furnished',
         apartmentType: '2 Bedroom',
         buildingType: '',
+ 
       ),
       House(
+        id: 3,
         name: 'White Galaxy',
         location: 'Tesano-Accra',
         imageUrl: 'assets/images/4-bed-2a.jpg',
@@ -158,8 +175,10 @@ factory House.fromJson(Map<String, dynamic> json) {
         furnishing: 'Furnished',
         apartmentType: '4 Bedroom',
         buildingType: '',
+
       ),
       House(
+        id: 4,
         name: 'Hart lane',
         location: 'Sakumono-Comm.14',
         imageUrl: 'assets/images/OIP.jpg',
@@ -172,6 +191,7 @@ factory House.fromJson(Map<String, dynamic> json) {
         furnishing: 'Not Furnished',
         apartmentType: '3 Bedroom',
         buildingType: '',
+
       ),
     ];
   }
